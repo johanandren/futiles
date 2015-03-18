@@ -13,7 +13,7 @@ object Timeouts {
   /**
    * When ```waitFor``` has passed, evaluate ```what``` on the given execution context and complete the future
    */
-  def timeout[A](waitFor: FiniteDuration, what: => A)(implicit ec: ExecutionContext): Future[A] = {
+  def timeout[A](waitFor: FiniteDuration)(what: => A)(implicit ec: ExecutionContext): Future[A] = {
     val promise = Promise[A]()
     timer.schedule(new TimerTask {
       override def run(): Unit = {
