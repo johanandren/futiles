@@ -49,6 +49,12 @@ class LiftingSpec extends Spec {
         liftTry(result).futureValue should be (Failure(new UnliftException("missing!")))
       }
 
+      it("unlifts None into a custom exception") {
+        val ex = new RuntimeException("dang")
+        val result = successful[Option[String]](None).unliftEx(ex)
+        liftTry(result).futureValue should be (Failure(ex))
+      }
+
       it("unlifts a Some(value) into value") {
         val result = successful[Option[String]](Some("woho")).unlift("missing!")
         result.futureValue should be ("woho")
@@ -80,6 +86,12 @@ class LiftingSpec extends Spec {
         val result = liftTry(successful(Right("woho")).unliftL("missing"))
         result.futureValue should be (Failure(new UnliftException("missing")))
       }
+
+      it("unlifts a Right into a custom exception") {
+        val ex = new RuntimeException("darnit")
+        val result = liftTry(successful(Right("woho")).unliftLEx(ex))
+        result.futureValue should be (Failure(ex))
+      }
     }
 
 
@@ -107,6 +119,13 @@ class LiftingSpec extends Spec {
       it("unlifts a Left into an exception") {
         val result = liftTry(successful(Left("woho")).unliftR("missing"))
         result.futureValue should be (Failure(new UnliftException("missing")))
+      }
+
+
+      it("unlifts a Left into a custom exception") {
+        val ex = new RuntimeException("bork bork")
+        val result = liftTry(successful(Left("woho")).unliftREx(ex))
+        result.futureValue should be (Failure(ex))
       }
     }
 
