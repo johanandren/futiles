@@ -86,7 +86,7 @@ object Lifting {
         unliftOptionEx[A](future, exceptionOnNone)
     }
 
-    implicit class FutureDecorator[A, B](future: Future[Either[A, B]]) {
+    implicit class FutureEitherDecorator[A, B](future: Future[Either[A, B]]) {
 
       /** return Future(a) if Left, exceptionMessageOnRight inside of an UnliftException if Right */
       def unliftL(exceptionMessageOnRight: => String)(implicit ec: ExecutionContext): Future[A] =
