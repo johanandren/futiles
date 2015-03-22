@@ -9,5 +9,5 @@ libraryDependencies ++= Seq(
 )
 
 headers := Map(
-  "scala" -> Apache2_0("2015", "Heiko Seeberger")
+  "scala" -> Apache2_0("2015", "Johan Andrén")
 )

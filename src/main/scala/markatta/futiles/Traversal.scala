@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Heiko Seeberger
+ * Copyright 2015 Johan Andrén
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
