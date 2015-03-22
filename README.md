@@ -1,6 +1,6 @@
 # Futiles
 [![Build Status](https://travis-ci.org/johanandren/futiles.svg)](https://travis-ci.org/johanandren/futiles)
-[![Coverage Status](https://coveralls.io/repos/johanandren/futiles/badge.svg)](https://coveralls.io/r/johanandren/futiles)
+[![Coverage Status](https://coveralls.io/repos/johanandren/futiles/badge.svg?branch=master)](https://coveralls.io/r/johanandren/futiles?branch=master)
 
 The missing utils for working with Scala Futures
 
