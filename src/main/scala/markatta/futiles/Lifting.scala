@@ -30,28 +30,84 @@ object Lifting {
    * @param exceptionMessageOnNone The message put in the exception
    */
   def unliftOption[A](future: Future[Option[A]], exceptionMessageOnNone: => String)(implicit ec: ExecutionContext): Future[A] =
-    future
-      .map(_.getOrElse(throw new UnliftException(exceptionMessageOnNone)))
+    unliftOptionEx[A](future, new UnliftException(exceptionMessageOnNone))
+
+
+  /**
+   * Unlifts a Future(Some(a)) into Future(a) and Future(None) into a failed future with a
+   * [[UnliftException]]
+   * @param exceptionBlock The exception to fail the future with for None
+   */
+  def unliftOptionEx[A](future: Future[Option[A]], exceptionBlock: => Exception)(implicit ec: ExecutionContext): Future[A] =
+    future.map(_.getOrElse(throw exceptionBlock))
 
   /**
    * Unlifts Future(Left(a)) into Future(a) and Future(Right(_)) into a future failed with [[UnliftException]]
-   * @param exceptionMessageOnNone The message to put in the exception
+   * @param exceptionMessageOnRight The message to put in the exception
    */
-  def unliftL[A, B](future: Future[Either[A, B]], exceptionMessageOnNone: => String)(implicit ec: ExecutionContext): Future[A] =
+  def unliftL[A, B](future: Future[Either[A, B]], exceptionMessageOnRight: => String)(implicit ec: ExecutionContext): Future[A] =
+    unliftLEx(future, new UnliftException(exceptionMessageOnRight))
+
+  /**
+   * Unlifts Future(Left(a)) into Future(a) and Future(Right(_)) into a future failed with the given exception
+   */
+  def unliftLEx[A, B](future: Future[Either[A, B]], exceptionOnRight: => Exception)(implicit ec: ExecutionContext): Future[A] =
     future.map(_.fold(
       identity,
-      _ => throw new UnliftException(exceptionMessageOnNone)
+      _ => throw exceptionOnRight
     ))
 
   /**
    * Unlifts Future(Left(_)) into a future failed with UnliftException and and Future(Right(b)) into a Future(b)
-   * @param exceptionMessageOnNone The message to put in the exception
+   * @param exceptionMessageOnLeft The message to put in the exception
    */
-  def unliftR[A, B](future: Future[Either[A, B]], exceptionMessageOnNone: => String)(implicit ec: ExecutionContext): Future[B] =
+  def unliftR[A, B](future: Future[Either[A, B]], exceptionMessageOnLeft: => String)(implicit ec: ExecutionContext): Future[B] =
+    unliftREx(future, new UnliftException(exceptionMessageOnLeft))
+
+  /**
+   * Unlifts Future(Left(_)) into a future failed with the given exception and and Future(Right(b)) into a Future(b)
+   */
+  def unliftREx[A, B](future: Future[Either[A, B]], exceptionOnLeft: => Exception)(implicit ec: ExecutionContext): Future[B] =
     future.map(_.fold(
-      _ => throw new UnliftException(exceptionMessageOnNone),
+      _ => throw exceptionOnLeft,
       identity
     ))
+
+
+  object Implicits {
+
+    implicit class FutureOptDecorator[A](future: Future[Option[A]]) {
+      /** @return Future(a) if the option is Some(a), a failed future with the given message if None */
+      def unlift(exceptionMessageOnNone: => String)(implicit ec: ExecutionContext): Future[A] =
+        unliftOption[A](future, exceptionMessageOnNone)
+
+      /** @return Future(a) if the option is Some(a), a failed future with the given exception if None */
+      def unliftEx(exceptionOnNone: => Exception)(implicit ec: ExecutionContext): Future[A] =
+        unliftOptionEx[A](future, exceptionOnNone)
+    }
+
+    implicit class FutureDecorator[A, B](future: Future[Either[A, B]]) {
+
+      /** return Future(a) if Left, exceptionMessageOnRight inside of an UnliftException if Right */
+      def unliftL(exceptionMessageOnRight: => String)(implicit ec: ExecutionContext): Future[A] =
+        Lifting.unliftL(future, exceptionMessageOnRight)
+
+      /** return Future(a) if Left, exceptionOnRight if Right */
+      def unliftLEx(exceptionOnRight: => Exception)(implicit ec: ExecutionContext): Future[A] =
+        Lifting.unliftLEx(future, exceptionOnRight)
+
+      /** return Future(b) if Right, exceptionMessageOnLeft inside of an UnliftException if Left */
+      def unliftR(exceptionMessageOnLeft: => String)(implicit ec: ExecutionContext): Future[B] =
+        Lifting.unliftR(future, exceptionMessageOnLeft)
+
+      /** return Future(b) if Right, exceptionOnLeft if Left */
+      def unliftREx(exceptionOnLeft: => Exception)(implicit ec: ExecutionContext): Future[B] =
+        Lifting.unliftREx(future, exceptionOnLeft)
+
+
+    }
+
+  }
 
 
 }
