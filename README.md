@@ -14,7 +14,7 @@ TODO publish artifact
 
 ### Sequencing futures
 The utilities inside of ```markatta.futiles.Sequencing``` allows
-you to sequence other functor types than collections, just like the build in
+you to sequence other functor types than collections, just like the built in
 ```scala.concurrent.Future.sequence``` function does.
 
 #### Options
