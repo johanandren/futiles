@@ -17,10 +17,9 @@
 package markatta.futiles
 
 import scala.collection.generic.CanBuildFrom
-import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.Try
 import scala.language.higherKinds
+import scala.util.Try
 
 /**
  * Functions for transforming something with a future inside into a future with something inside

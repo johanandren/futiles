@@ -2,10 +2,7 @@ package markatta.futiles
 
 import java.util.concurrent.CountDownLatch
 
-import markatta.futiles.Sequencing._
-
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
 
 class TraversalSpec extends Spec {
 
