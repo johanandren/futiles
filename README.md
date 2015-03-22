@@ -1,4 +1,6 @@
 # Futiles
+[![Build Status](https://travis-ci.org/johanandren/futiles.svg)](https://travis-ci.org/johanandren/futiles)
+
 The missing utils for working with Scala Futures
 
 Throughout a few different Scala projects I have written these utility functions for working with futures
