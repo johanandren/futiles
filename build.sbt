@@ -3,6 +3,7 @@ import de.heikoseeberger.sbtheader.license.Apache2_0
 scalaVersion := "2.11.5"
 version := "1.0-SNAPSHOT"
 name := "futiles"
+organization := "com.markatta"
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4" % "test"
@@ -13,7 +14,11 @@ headers := Map(
 )
 
 // releasing
+sonatypeSettings
+licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+homepage := Some(url("https://github.com/johanandren/futiles"))
 publishMavenStyle := true
+publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
 publishTo := Some {
   val nexus = "https://oss.sonatype.org/"
@@ -24,23 +29,15 @@ publishTo := Some {
 }
 
 pomExtra :=
-  <url>https://github.com/johanandren/futiles</url>
-    <licenses>
-      <license>
-        <name>Apache License, Version 2.0</name>
-        <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        <distribution>repo</distribution>
-      </license>
-    </licenses>
-    <scm>
-      <url>git@github.com:johanandren/futiles.git</url>
-      <connection>scm:git:git@github.com:johanandren/futiles.git</connection>
-    </scm>
-    <developers>
-      <developer>
-        <id>johanandren</id>
-        <name>Johan Andrén</name>
-        <email>johan@markatta.com</email>
-        <url>https://markatta.com/johan/codemonkey</url>
-      </developer>
-    </developers>
+  <scm>
+    <url>git@github.com:johanandren/futiles.git</url>
+    <connection>scm:git:git@github.com:johanandren/futiles.git</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>johanandren</id>
+      <name>Johan Andrén</name>
+      <email>johan@markatta.com</email>
+      <url>https://markatta.com/johan/codemonkey</url>
+    </developer>
+  </developers>
