@@ -70,7 +70,7 @@ function sequentially, so that at any time only one future is executing and the 
 not be done until it completes. If any future fails, it will stop and return a failed future
 with that exception.
 
-Example:
+**Example:**
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future.{successful, failed}
@@ -169,7 +169,7 @@ on play.
 If an exception is thrown by the by-name-parameter the future will be failed instead of
 completed when the timeout is reached.
 
-Example:
+**Example:**
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
