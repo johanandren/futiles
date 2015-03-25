@@ -8,7 +8,11 @@ Throughout a few different Scala projects I have written these utility functions
 over and over again.
 
 ## Quick start
-TODO publish artifact
+The artifact is on maven central and can be used by adding it to your project dependencies
+in sbt:
+```scala
+libraryDependencies += "com.markatta" %% "futiles" % "1.0.0"
+```
 
 ## Examples
 
