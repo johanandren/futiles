@@ -26,6 +26,7 @@ Make a future option value out of an option future value:
 
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.concurrent.Future.successful
 import markatta.futiles.Sequencing.sequenceOpt
 val optionFuture: Option[Future[String]] = Some(successful("woho!"))
@@ -48,10 +49,12 @@ failed future but rather collect all those and let you handle them when all has 
 
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 import scala.concurrent.Future.{successful, failed}
+import scala.util.Try
 import markatta.futiles.Sequencing.sequenceTries
 
-val futures: Seq[Future[String]] = Seq(successful("woho"), failed(new RuntimeException("bork"))
+val futures: Seq[Future[String]] = Seq(successful("woho"), failed(new RuntimeException("bork")))
 
 val allOfEm: Future[Seq[Try[String]]] = sequenceTries(futures)
 ```
@@ -128,8 +131,8 @@ To make it really concise an implicit class is provided that
 **Example:**
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Lifting.UnliftException
-import scala.concurrent.Lifting.Implicits._
+import markatta.futiles.UnliftException
+import markatta.futiles.Lifting.Implicits._
 
 val result =
   for {
@@ -150,7 +153,8 @@ with the value inside of a ```Left``` while ```unliftR``` and ```unliftREx``` do
 There is also implicit decoration for the two:
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Lifting.Implicits._
+import scala.concurrent.Future
+import markatta.futiles.Lifting.Implicits._
 
 val futureEither: Future[Either[String, Int]] = ???
 val result: Future[Int] = futureEither.unliftR("Danger Danger!")
@@ -168,11 +172,11 @@ completed when the timeout is reached.
 Example:
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Lifting.Timeouts.timeout
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import markatta.futiles.Timeouts.timeout
 
-val timeout = timeout(1.seconds)("Oh noes, it was too slow, you get default instead")
-val result = Future.firstCompletedOf(Seq(doItForReals(), timeout()))
+val timeoutF = timeout(1.seconds)("Oh noes, it was too slow, you get default instead")
+val result = Future.firstCompletedOf(Seq(doItForReals(), timeoutF))
 ```
 
