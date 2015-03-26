@@ -88,6 +88,26 @@ val result = traverseSequentially(List(1,2,3)) { n =>
 // result will always be Future(List((1, 2L), (2, 1L), (3, 0L)))
 ```
 
+### Combining futures
+
+#### multiple futures into one future tuple
+Combine up to 6 futures into a tuple with the value of each future using ```product```. If either fails the result
+will be a failed future. Or apply a function using ```mapN``` or ```flatMapN``` while you are at it
+
+Example:
+```scala
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.concurrent.Future.successful
+import markatta.futiles.Combining._
+
+val fTuple: Future[(Int, String)] = product(successful(1), successful("woho"))
+
+val mapped: Future[String] = map2(successful(1), successful("woho"))((a, b) => a.toString + b)
+
+val flatMapped: Future[String] = flatMap2(successful(1), successful("woho"))((a, b) => successful(a.toString + b)) 
+```
+
 
 ### Lifting and unlifting container types inside of futures
 
