@@ -180,3 +180,44 @@ val timeoutF = timeout(1.seconds)("Oh noes, it was too slow, you get default ins
 val result = Future.firstCompletedOf(Seq(doItForReals(), timeoutF))
 ```
 
+### Retrying failed futures
+A common scenario is that you use Futures to interact with remote systems, but what if the
+remote system is down exactly when the request is done, or the network cable was disconnected
+by your little brother.
+
+Futiles contains two flavours of retry for futures:
+
+* Retry right away with ```markatta.futiles.Retry.retry```
+* Retry with an exponential back off, waiting longer and longer before each retry
+ 
+Both methods allows you to specify the maximum number of retries to perform and a predicate function
+```Throwable => Boolean``` that will be given any exception and decides if it should lead to a retry or not.
+ 
+By default all throwables lead to retry.
+
+**Example of the simple retry**
+```scala
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import markatta.futiles.Retry._
+
+val result: Future[Int] = retry(5) {
+  callThatService(): Future[Int]
+}
+```
+
+
+Exponential back off additionally takes a back off time unit, which decides a base for the calculation
+```max(try * 2 ^ time_unit, 1) * jitter```
+
+**Example with exponential back off**
+```scala
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
+import markatta.futiles.Retry._
+
+val result: Future[Int] = retryWithBackOff(5, 5.seconds) {
+  callThatService(): Future[Int]
+}
+```
