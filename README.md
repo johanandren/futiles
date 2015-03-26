@@ -11,7 +11,7 @@ over and over again.
 The artifact is on maven central and can be used by adding it to your project dependencies
 in sbt:
 ```scala
-libraryDependencies += "com.markatta" %% "futiles" % "1.0.0"
+libraryDependencies += "com.markatta" %% "futiles" % "1.1.0"
 ```
 
 ## Examples

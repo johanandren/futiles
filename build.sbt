@@ -1,7 +1,7 @@
 import de.heikoseeberger.sbtheader.license.Apache2_0
 
 scalaVersion := "2.11.5"
-version := "1.1.0"
+version := "1.1.1-SNAPSHOT"
 name := "futiles"
 organization := "com.markatta"
 
