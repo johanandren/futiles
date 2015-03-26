@@ -1,9 +1,11 @@
 import de.heikoseeberger.sbtheader.license.Apache2_0
 
-scalaVersion := "2.11.5"
 version := "1.1.1-SNAPSHOT"
 name := "futiles"
 organization := "com.markatta"
+
+scalaVersion := "2.11.5"
+scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.4" % "test"
