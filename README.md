@@ -1,4 +1,6 @@
 # Futiles
+
+[![Join the chat at https://gitter.im/johanandren/futiles](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/johanandren/futiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/johanandren/futiles.svg)](https://travis-ci.org/johanandren/futiles)
 [![Coverage Status](https://coveralls.io/repos/johanandren/futiles/badge.svg?branch=master)](https://coveralls.io/r/johanandren/futiles?branch=master)
 
