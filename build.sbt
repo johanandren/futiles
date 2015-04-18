@@ -1,6 +1,6 @@
 import de.heikoseeberger.sbtheader.license.Apache2_0
+import sbtrelease.ReleasePlugin.ReleaseKeys
 
-version := "1.1.1-SNAPSHOT"
 name := "futiles"
 organization := "com.markatta"
 
@@ -17,8 +17,9 @@ headers := Map(
 )
 
 // releasing
+releaseSettings
 sonatypeSettings
-licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+ReleaseKeys.crossBuild := true
 homepage := Some(url("https://github.com/johanandren/futiles"))
 publishMavenStyle := true
 publishArtifact in Test := false
