@@ -6,15 +6,21 @@
 
 The missing utils for working with Scala Futures
 
+
+## About
 Throughout a few different Scala projects I have written these utility functions for working with futures
 over and over again.
+
+[Changelog](CHANGELOG.md)
 
 ## Quick start
 The artifact is on maven central and can be used by adding it to your project dependencies
 in sbt:
 ```scala
-libraryDependencies += "com.markatta" %% "futiles" % "1.1.0"
+libraryDependencies += "com.markatta" %% "futiles" % "1.1.1"
 ```
+
+
 
 ## Examples
 
