@@ -20,6 +20,7 @@ headers := Map(
 releaseSettings
 sonatypeSettings
 ReleaseKeys.crossBuild := true
+licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
 homepage := Some(url("https://github.com/johanandren/futiles"))
 publishMavenStyle := true
 publishArtifact in Test := false
