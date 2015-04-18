@@ -4,5 +4,5 @@ scala:
   - 2.10.5
 script: 
   - sbt coverage 
-  - test
+  - sbt test
 after_success: "sbt coveralls"
