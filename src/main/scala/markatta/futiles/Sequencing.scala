@@ -56,12 +56,12 @@ object Sequencing {
 
 
   /**
-   * Like [[Future.sequence()]] but instead of failing the result future when one future fails
+   * Like Future.sequence() but instead of failing the result future when one future fails
    * it will collect each success or failure and complete once all futures has either failed or succeeded
    *
    * @return A future that completes once all the given futures has completed, successfully or failed, so
    *         that all of the failures can be handled, reported etc.
-   * @see [[Lifting.liftTry()]]
+   * @see Lifting.liftTry()
    */
   def sequenceTries[A, M[X] <: TraversableOnce[X]](
     fas: M[Future[A]]
