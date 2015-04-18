@@ -5,6 +5,7 @@ name := "futiles"
 organization := "com.markatta"
 
 scalaVersion := "2.11.5"
+crossScalaVersions := Seq(scalaVersion.value, "2.10.5")
 scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
 libraryDependencies ++= Seq(
