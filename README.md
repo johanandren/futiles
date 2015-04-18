@@ -3,6 +3,7 @@
 [![Join the chat at https://gitter.im/johanandren/futiles](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/johanandren/futiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/johanandren/futiles.svg)](https://travis-ci.org/johanandren/futiles)
 [![Coverage Status](https://coveralls.io/repos/johanandren/futiles/badge.svg?branch=master)](https://coveralls.io/r/johanandren/futiles?branch=master)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 The missing utils for working with Scala Futures
 
@@ -12,6 +13,8 @@ Throughout a few different Scala projects I have written these utility functions
 over and over again.
 
 [Changelog](CHANGELOG.md)
+
+License: [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
 ## Quick start
 The artifact is on maven central and can be used by adding it to your project dependencies
