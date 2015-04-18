@@ -24,7 +24,7 @@ libraryDependencies += "com.markatta" %% "futiles" % "1.1.1"
 
 ## Examples
 
-### Sequencing futures
+### Sequencing futures - [markatta.futiles.Sequencing](src/main/scala/markatta/futiles/Sequencing.scala)
 The utilities inside of ```markatta.futiles.Sequencing``` allows
 you to sequence other functor types than collections, just like the built in
 ```scala.concurrent.Future.sequence``` function does.
@@ -68,7 +68,7 @@ val allOfEm: Future[Seq[Try[String]]] = sequenceTries(futures)
 ```
 
 
-### Traversal
+### Traversal - [markatta.futiles.Traversal](src/main/scala/markatta/futiles/Traversal.scala)
 ```scala.concurrent.Future.traverse``` allows you to have a collection of ```A```s,
 apply a function ```A => Future[B]``` to each of them and then sequence the resulting collection
 into a future collection of ```B```.
@@ -96,7 +96,7 @@ val result = traverseSequentially(List(1,2,3)) { n =>
 // result will always be Future(List((1, 2L), (2, 1L), (3, 0L)))
 ```
 
-### Combining futures
+### Combining futures - [markatta.futiles.Combining](src/main/scala/markatta/futiles/Combining.scala)
 
 #### multiple futures into one future tuple
 Combine up to 6 futures into a tuple with the value of each future using ```product```. If either fails the result
@@ -117,7 +117,7 @@ val flatMapped: Future[String] = flatMap2(successful(1), successful("woho"))((a,
 ```
 
 
-### Lifting and unlifting container types inside of futures
+### Lifting and unlifting container types inside of futures -  [markatta.futiles.Lifting](src/main/scala/markatta/futiles/Lifting.scala)
 
 #### Lift the implicit try into the future
 If you want to lift a failed future into a successful future with a failed try inside, you
@@ -188,7 +188,7 @@ val futureEither: Future[Either[String, Int]] = ???
 val result: Future[Int] = futureEither.unliftR("Danger Danger!")
 ```
 
-### Timeouts
+### Timeouts - [markatta.futiles.Timeouts](src/main/scala/markatta/futiles/Timeouts.scala)
 Some times you want to wait a specific amount of time before triggering a future, or you want
 it to complete at a specific timeout with a value you already have. This is available for example
 in the play framework future libraries, but maybe you would want to do that without depending
@@ -208,7 +208,7 @@ val timeoutF = timeout(1.seconds)("Oh noes, it was too slow, you get default ins
 val result = Future.firstCompletedOf(Seq(doItForReals(), timeoutF))
 ```
 
-### Retrying failed futures
+### Retrying failed futures - [markatta.futiles.Retry](src/main/scala/markatta/futiles/Retry.scala)
 A common scenario is that you use Futures to interact with remote systems, but what if the
 remote system is down exactly when the request is done, or the network cable was disconnected
 by your little brother.
