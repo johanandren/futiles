@@ -72,6 +72,8 @@ val allOfEm: Future[Seq[Try[String]]] = sequenceTries(futures)
 
 
 ### Traversal - [markatta.futiles.Traversal](src/main/scala/markatta/futiles/Traversal.scala)
+
+#### Sequential traverse
 ```scala.concurrent.Future.traverse``` allows you to have a collection of ```A```s,
 apply a function ```A => Future[B]``` to each of them and then sequence the resulting collection
 into a future collection of ```B```.
@@ -98,6 +100,24 @@ val result = traverseSequentially(List(1,2,3)) { n =>
 
 // result will always be Future(List((1, 2L), (2, 1L), (3, 0L)))
 ```
+
+#### Sequential fold left
+A more general case of traversal, lets you build any kind of object asynchronously but sequentially:
+
+**Example**
+```scala
+val latch = new CountDownLatch(3)
+val result = foldLeftSequentially(List(1,2,3))(Seq.empty[Int]) { (acc, n) =>
+  Future {
+    latch.countDown()
+    val l = latch.getCount.toInt
+    acc :+ l
+  }
+}
+
+// result will always be Future(List(2, 1, 0)))
+```
+
 
 ### Combining futures - [markatta.futiles.Combining](src/main/scala/markatta/futiles/Combining.scala)
 

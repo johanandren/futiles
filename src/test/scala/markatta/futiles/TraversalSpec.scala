@@ -8,7 +8,7 @@ class TraversalSpec extends Spec {
 
   import Traversal._
 
-  describe("the traversal utitlities") {
+  describe("the sequential traversal") {
 
     it("executes the futures sequentially") {
       val latch = new CountDownLatch(3)
@@ -37,5 +37,37 @@ class TraversalSpec extends Spec {
       Lifting.liftTry(result).futureValue.isFailure should be (true)
     }
 
+  }
+
+  describe("the sequential foldLeft") {
+
+    it("executes the futures sequentially") {
+      val latch = new CountDownLatch(3)
+      val result = foldLeftSequentially(List(1,2,3))(Seq.empty[Int]) { (acc, n) =>
+        Future {
+          latch.countDown()
+          val l = latch.getCount.toInt
+          acc :+ l
+        }
+      }
+
+      result.futureValue should be (List(2, 1, 0))
+
+    }
+
+    it("executes fails if one of the futures fails") {
+      val latch = new CountDownLatch(3)
+      val result = foldLeftSequentially(List(1,2,3))(Seq.empty[Int]) { (acc, n) =>
+        Future {
+          latch.countDown()
+          val l = latch.getCount.toInt
+          if (l == 1) throw new RuntimeException("fail")
+          acc :+ l
+        }
+      }
+
+      Lifting.liftTry(result).futureValue.isFailure should be (true)
+
+    }
   }
 }
