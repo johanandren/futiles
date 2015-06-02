@@ -21,7 +21,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.language.higherKinds
 
 /**
- * Utilities that complement [[scala.concurrent.Future.traverse]], working with creating a future out of each element
+ * Utilities that complement scala.concurrent.Future.traverse, working with creating a future out of each element
  * in a collection and collecting those into a single future.
  */
 object Traversal {
