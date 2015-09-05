@@ -217,7 +217,7 @@ Boolean ``&&`` and ``||`` for `Future[Boolean]`s
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import markatta.futiles.Lifting.Implicits._
+import markatta.futiles.Boolean.Implicits._
 
 def a: Future[Boolean] = ???
 def b: Future[Boolean] = ???
