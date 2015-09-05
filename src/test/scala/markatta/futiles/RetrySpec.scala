@@ -1,6 +1,7 @@
 package markatta.futiles
 
 import java.util.concurrent.atomic.AtomicInteger
+import scala.concurrent.Future
 import scala.concurrent.Future.{failed, successful}
 import scala.util.Failure
 import scala.concurrent.duration._
@@ -66,6 +67,20 @@ class RetrySpec extends Spec {
 
         val timeFromStart = result.futureValue - before
         timeFromStart should (be > 5L and be < 125L)
+      }
+
+      it("produces a failed future if the future-creation block fails") {
+        val invocations = new AtomicInteger(0)
+        def fail(): Future[Int] = {
+          invocations.incrementAndGet()
+          throw new RuntimeException("Oh noes, failure, FAILURE!")
+        }
+
+        val result = retryWithBackOff(5, 5.milliseconds)(fail())
+        whenReady(liftTry(result)) { fail =>
+          fail shouldBe a[Failure[_]]
+        }
+        invocations.get() shouldBe (1)
       }
     }
 
