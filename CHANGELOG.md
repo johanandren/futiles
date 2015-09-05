@@ -1,4 +1,4 @@
-##
+## 1.1.3
 
  * `Future[Boolean]` operations
 
