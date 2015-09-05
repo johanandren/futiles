@@ -33,8 +33,8 @@ class BooleanSpec extends Spec {
       val t = Future.successful(true)
       val f = Future.successful(false)
 
-      (t.!).futureValue should be (false)
-      (f.!).futureValue should be (true)
+      (!t).futureValue should be (false)
+      (!f).futureValue should be (true)
     }
 
   }

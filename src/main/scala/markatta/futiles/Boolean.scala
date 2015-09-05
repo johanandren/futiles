@@ -44,7 +44,7 @@ object Boolean {
       def ||(other: => Future[Boolean])(implicit ec: ExecutionContext) =
         or(fb, other)
 
-      def !(implicit ec: ExecutionContext) = negate(fb)(ec)
+      def unary_!(implicit ec: ExecutionContext) = negate(fb)(ec)
 
     }
 
