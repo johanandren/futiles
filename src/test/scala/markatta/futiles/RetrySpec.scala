@@ -66,7 +66,7 @@ class RetrySpec extends Spec {
         }
 
         val timeFromStart = result.futureValue - before
-        timeFromStart should (be > 5L and be < 125L)
+        timeFromStart should (be >= 5L and be < 125L)
       }
 
       it("produces a failed future if the future-creation block fails") {
