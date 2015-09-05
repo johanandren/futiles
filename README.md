@@ -20,7 +20,7 @@ License: [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 The artifact is on maven central and can be used by adding it to your project dependencies
 in sbt:
 ```scala
-libraryDependencies += "com.markatta" %% "futiles" % "1.1.1"
+libraryDependencies += "com.markatta" %% "futiles" % "1.1.3"
 ```
 
 
