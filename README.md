@@ -211,6 +211,19 @@ val futureEither: Future[Either[String, Int]] = ???
 val result: Future[Int] = futureEither.unliftR("Danger Danger!")
 ```
 
+### Booleans - [markatta.futiles.Booleans](src/main/scala/markatta/futiles/Booleans.scala)
+Boolean && and || for ´Future[Boolean]`s
+
+```scala
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import markatta.futiles.Lifting.Implicits._
+
+def a: Future[Boolean] = ???
+def b: Future[Boolean] = ???
+val both: Future[Boolean] = a && b
+val either: Future[Boolean] = a || b
+
 ### Timeouts - [markatta.futiles.Timeouts](src/main/scala/markatta/futiles/Timeouts.scala)
 Some times you want to wait a specific amount of time before triggering a future, or you want
 it to complete at a specific timeout with a value you already have. This is available for example

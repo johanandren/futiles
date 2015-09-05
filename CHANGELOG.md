@@ -1,3 +1,7 @@
+##
+
+ * `Future[Boolean]` operations
+
 ## 1.1.2:
  
  * Traversal.foldLeftSequentially
