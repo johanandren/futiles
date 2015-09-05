@@ -211,7 +211,7 @@ val futureEither: Future[Either[String, Int]] = ???
 val result: Future[Int] = futureEither.unliftR("Danger Danger!")
 ```
 
-### Booleans - [markatta.futiles.Booleans](src/main/scala/markatta/futiles/Booleans.scala)
+### Booleans - [markatta.futiles.Boolean](src/main/scala/markatta/futiles/Booleans.scala)
 Boolean ``&&`` and ``||`` for `Future[Boolean]`s
 
 ```scala
