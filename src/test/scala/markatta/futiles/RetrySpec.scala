@@ -39,6 +39,21 @@ class RetrySpec extends Spec {
 
         result.futureValue should be("woo")
       }
+
+      it("produces a failed future if the future-creation block fails") {
+        val invocations = new AtomicInteger(0)
+        def fail(): Future[Int] = {
+          invocations.incrementAndGet()
+          throw new RuntimeException("Oh noes, failure, FAILURE!")
+        }
+
+        val result = retry(5)(fail())
+        whenReady(liftTry(result)) { fail =>
+          fail shouldBe a[Failure[_]]
+        }
+        invocations.get() shouldBe (1)
+      }
+
     }
 
     describe("The exponential back off retry") {
