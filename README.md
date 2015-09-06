@@ -212,19 +212,23 @@ val result: Future[Int] = futureEither.unliftR("Danger Danger!")
 ```
 
 ### Booleans - [markatta.futiles.Boolean](src/main/scala/markatta/futiles/Boolean.scala)
-Boolean ``&&`` and ``||`` for `Future[Boolean]`s
+Boolean ``&&`` and ``||`` for `Future[Boolean]`s. Operations are short circuited just like regular boolean expressions. **Important:** this affects failures, if the operation is short circuited the second `Future[Boolean]` might not be evaluated at all. If it is created before the boolean op it might be outright ignored even if it fails.
 
 ```scala
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import markatta.futiles.Boolean.Implicits._
 
+// short circuit will only happen if we do not create 
+// the futures before hand
 def a: Future[Boolean] = ???
 def b: Future[Boolean] = ???
 val both: Future[Boolean] = a && b
 val either: Future[Boolean] = a || b
 val negated: Future[Boolean] = !a
 ```
+
+There is an idea to be able to short circuit for the first arrived future, but this makes failure handling racey (see [#5](https://github.com/johanandren/futiles/issues/5)).
 
 ### Timeouts - [markatta.futiles.Timeouts](src/main/scala/markatta/futiles/Timeouts.scala)
 Some times you want to wait a specific amount of time before triggering a future, or you want
