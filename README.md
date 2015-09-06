@@ -23,6 +23,10 @@ in sbt:
 libraryDependencies += "com.markatta" %% "futiles" % "1.1.3"
 ```
 
+Latest stable version:
+ * Scala 2.10 - [![Maven Central, Scala 2.10](https://maven-badges.herokuapp.com/maven-central/com.markatta/futiles_2.10/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22futiles_2.10%22)
+ * Scala 2.11 - [![Maven Central, Scala 2.11](https://maven-badges.herokuapp.com/maven-central/com.markatta/futiles_2.11/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22futiles_2.11%22)
+
 
 
 ## Examples
