@@ -134,9 +134,11 @@ import markatta.futiles.Combining._
 
 val fTuple: Future[(Int, String)] = product(successful(1), successful("woho"))
 
-val mapped: Future[String] = map2(successful(1), successful("woho"))((a, b) => a.toString + b)
+val mapped: Future[String] = 
+  map2(successful(1), successful("woho"))((a, b) => a.toString + b)
 
-val flatMapped: Future[String] = flatMap2(successful(1), successful("woho"))((a, b) => successful(a.toString + b)) 
+val flatMapped: Future[String] = 
+  flatMap2(successful(1), successful("woho"))((a, b) => successful(a.toString + b)) 
 ```
 
 
@@ -246,7 +248,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import markatta.futiles.Timeouts.timeout
 
-val timeoutF = timeout(1.seconds)("Oh noes, it was too slow, you get default instead")
+val timeoutF = timeout(1.seconds)("It was too slow, you get default instead")
 val result = Future.firstCompletedOf(Seq(doItForReals(), timeoutF))
 ```
 
