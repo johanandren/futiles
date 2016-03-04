@@ -29,29 +29,29 @@ object Sequencing {
   /**
    * Turn an option of a future inside out, much like Future.sequence but keep it an Option
    */
-  def sequenceOpt[A](f: Option[Future[A]])(implicit ec: ExecutionContext): Future[Option[A]] =
-    f.map(_.map(Some(_))).getOrElse(Future.successful(None))
+  def sequenceOpt[A](f: Option[Future[A]]): Future[Option[A]] =
+    f.map(_.map(Some(_))(CallingThreadExecutionContext)).getOrElse(Future.successful(None))
 
 
   /**
    * @return a Future(Left(l)) for a Left(Future(l)) and a Future(Right(r)) for a Right(Future(r))
    */
-  def sequenceEither[L, R](either: Either[Future[L], Future[R]])(implicit ec: ExecutionContext): Future[Either[L, R]] =
+  def sequenceEither[L, R](either: Either[Future[L], Future[R]]): Future[Either[L, R]] =
     either.fold(
-      lf => lf.map(l => Left[L, R](l)),
-      rf => rf.map(r => Right[L, R](r))
+      lf => lf.map(l => Left[L, R](l))(CallingThreadExecutionContext),
+      rf => rf.map(r => Right[L, R](r))(CallingThreadExecutionContext)
     )
 
   /**
    * @return a Future(Left(l)) for a Left(Future(l)) and a Future(Right(r)) for a Right(r)
    */
-  def sequenceL[L, R](either: Either[Future[L], R])(implicit ec: ExecutionContext): Future[Either[L, R]] =
+  def sequenceL[L, R](either: Either[Future[L], R]): Future[Either[L, R]] =
     sequenceEither(either.right.map(Future.successful))
 
   /**
    * @return a Future(Left(l)) for a Left(l) and a Future(Right(r)) for a Right(Future(r))
    */
-  def sequenceR[L, R](either: Either[L, Future[R]])(implicit ec: ExecutionContext): Future[Either[L, R]] =
+  def sequenceR[L, R](either: Either[L, Future[R]]): Future[Either[L, R]] =
     sequenceEither(either.left.map(Future.successful))
 
 

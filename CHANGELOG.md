@@ -1,3 +1,7 @@
+## 2.0.0
+
+ * Performance improvement for simple transformation ops (breaks binary compatibility)
+
 ## 1.1.3
 
  * `Future[Boolean]` operations

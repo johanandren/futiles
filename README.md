@@ -36,7 +36,6 @@ you to sequence other functor types than collections, just like the built in
 Make a future option value out of an option future value:
 
 ```scala
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 import markatta.futiles.Sequencing.sequenceOpt
@@ -127,7 +126,6 @@ will be a failed future. Or apply a function using ```mapN``` or ```flatMapN``` 
 
 Example:
 ```scala
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 import markatta.futiles.Combining._
@@ -203,7 +201,6 @@ with the value inside of a ```Left``` while ```unliftR``` and ```unliftREx``` do
 
 There is also implicit decoration for the two:
 ```scala
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import markatta.futiles.Lifting.Implicits._
 
