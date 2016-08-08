@@ -16,11 +16,13 @@
 
 package markatta.futiles
 
-import java.util.{TimerTask, Timer}
+import java.util.concurrent.TimeoutException
+import java.util.{Timer, TimerTask}
 
-import scala.concurrent.{Future, Promise, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.concurrent.duration.FiniteDuration
 import scala.util.Try
+import scala.collection.immutable.Seq
 
 object Timeouts {
 
@@ -43,6 +45,32 @@ object Timeouts {
     promise.future
   }
 
+  object Implicits {
+    final implicit class FutureTimeoutDecorator[T](future: Future[T]) {
 
+      /**
+       * If this future takes more than `atMost` it will instead be failed with a [[java.util.concurrent.TimeoutException]]
+       *
+       * Note that the original future will always complete at some point,
+       * so this does in no way cancel the future if it times out.
+       */
+      def withTimeoutError(atMost: FiniteDuration)(implicit ec: ExecutionContext): Future[T] =
+        Future.firstCompletedOf[T](Seq(
+          future,
+          timeout[T](atMost)(throw new TimeoutException(s"Timed out after $atMost"))))
+
+      /**
+       * If this future takes more than `atMost` it will instead be completed with a the given default
+       *
+       * Note that the original future will always complete at some point,
+       * so this does in no way cancel the future if it times out.
+       */
+      def withTimeoutDefault[U >: T](atMost: FiniteDuration, default: => U)(implicit ec: ExecutionContext): Future[U] =
+        Future.firstCompletedOf[U](Seq(
+          future,
+          timeout(atMost)(default)))
+
+    }
+  }
 
 }
