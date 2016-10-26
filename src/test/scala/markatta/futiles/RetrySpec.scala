@@ -85,7 +85,7 @@ class RetrySpec extends Spec {
         whenReady(liftTry(result)) { fail =>
           count.get() should be(5)
           fail shouldBe a[Failure[_]]
-        }(PatienceConfig(300.millis, 50.millis))
+        }(PatienceConfig(3.seconds, 100.millis))
       }
 
       it("returns the first success but has backed off") {
