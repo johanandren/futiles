@@ -4,12 +4,12 @@ import sbtrelease.ReleasePlugin.ReleaseKeys
 name := "futiles"
 organization := "com.markatta"
 
-scalaVersion := "2.11.5"
-crossScalaVersions := Seq(scalaVersion.value, "2.10.5")
+scalaVersion := "2.12.0"
+crossScalaVersions := Seq(scalaVersion.value, "2.11.8", "2.10.5")
 scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+  "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 )
 
 headers := Map(
