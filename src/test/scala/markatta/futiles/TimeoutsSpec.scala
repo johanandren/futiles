@@ -16,7 +16,11 @@
 
 package markatta.futiles
 
+import java.util.concurrent.TimeoutException
+
+import scala.concurrent.{Future, Promise}
 import scala.concurrent.duration._
+import Timeouts.Implicits._
 
 class TimeoutsSpec extends Spec {
 
@@ -25,6 +29,31 @@ class TimeoutsSpec extends Spec {
     it("runs a future after a given timeout") {
       val result = Timeouts.timeout(2.millis)("success")
       result.futureValue should be ("success")
+    }
+
+    it("decorates a future with an error timeout") {
+      val future = Promise[String]().future
+      val result = future.withTimeoutError(2.millis)
+
+      val ex = result.failed.futureValue
+
+      ex.getClass shouldEqual classOf[TimeoutException]
+      ex.getMessage shouldEqual "Timed out after 2 milliseconds"
+    }
+
+    it("completes a future rathern than fail it if it does not timeout") {
+      Future.successful("success").withTimeoutError(10.seconds).futureValue should be ("success")
+    }
+
+    it("decorates a future with an default timeout") {
+      val future = Promise[String]().future
+      val result = future.withTimeoutDefault(2.millis, "banana")
+
+      result.futureValue shouldEqual "banana"
+    }
+
+    it("completes a future rathern than default it if it does not timeout") {
+      Future.successful("success").withTimeoutDefault(10.seconds, "default").futureValue should be ("success")
     }
   }
 }

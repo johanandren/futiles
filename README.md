@@ -253,6 +253,22 @@ val timeoutF = timeout(1.seconds)("It was too slow, you get default instead")
 val result = Future.firstCompletedOf(Seq(doItForReals(), timeoutF))
 ```
 
+#### Implicit timeout methods
+Timeouts is such a common concept that there also is implicit decorations for futures.
+Note that the original future will always complete at some point, so this does in no way cancel
+the future if it times out.
+
+**Example:**
+```scala
+import Timeouts.Implicits._
+
+val future: Future[String] = ???
+
+val willFailIfNotCompletedWithin2s = future.withTimeoutError(2.seconds)
+val willDefaultIfNotCompletedInTime = future.withTimeoutDefault(2.seconds, "Sensible default")
+```
+
+
 ### Retrying failed futures - [markatta.futiles.Retry](src/main/scala/markatta/futiles/Retry.scala)
 A common scenario is that you use Futures to interact with remote systems, but what if the
 remote system is down exactly when the request is done, or the network cable was disconnected
