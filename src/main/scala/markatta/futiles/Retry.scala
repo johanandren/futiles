@@ -16,10 +16,10 @@
 
 package markatta.futiles
 
-import java.util.concurrent.ThreadLocalRandom
+import java.util.concurrent.{ThreadLocalRandom, TimeUnit}
 
 import scala.concurrent.duration.FiniteDuration
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
 
 object Retry {
@@ -81,12 +81,13 @@ object Retry {
     }
 
 
-  private def nextBackOff(tries: Int, backOffUnit: FiniteDuration): FiniteDuration = {
+  private[futiles] def nextBackOff(tries: Int, backOffUnit: FiniteDuration): FiniteDuration = {
+    require(tries > 0, "tries should start from 1")
     val rng = new Random(ThreadLocalRandom.current())
     // jitter between 0.5 and 1.5
-    val jitter = 0.5 + rng.nextFloat()
-    val k = (math.max(1, 2 ^ tries - 1) * jitter).toInt
-    backOffUnit * k
+    val jitter = 0.5 + rng.nextDouble()
+    val factor = math.pow(2, tries) * jitter
+    FiniteDuration((backOffUnit.toMillis * factor).toLong, TimeUnit.MILLISECONDS)
   }
 
 }

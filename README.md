@@ -297,7 +297,11 @@ val result: Future[Int] = retry(5) {
 
 
 Exponential back off additionally takes a back off time unit, which decides a base for the calculation
-```max(try * 2 ^ time_unit, 1) * jitter```
+`(2 ^ tries) * jitter * timeUnit`, where `jitter` will be a random value between `0.5` and `1.5`. 
+this means that a time unit of 1 second the first retry will back off between `1` and `3` seconds, the
+ second try between `2` and `6` seconds, the third try between `4` and `12` and so on until the maximum number
+ of retries is reached and at that time the future will be failed.
+
 
 **Example with exponential back off**
 ```scala

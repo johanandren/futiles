@@ -17,6 +17,9 @@
 package markatta.futiles
 
 import java.util.concurrent.atomic.AtomicInteger
+
+import org.scalactic.source.Position
+
 import scala.concurrent.Future
 import scala.concurrent.Future.{failed, successful}
 import scala.util.Failure
@@ -85,7 +88,7 @@ class RetrySpec extends Spec {
         whenReady(liftTry(result)) { fail =>
           count.get() should be(5)
           fail shouldBe a[Failure[_]]
-        }
+        }(PatienceConfig(3.seconds, 100.millis), implicitly[Position])
       }
 
       it("returns the first success but has backed off") {

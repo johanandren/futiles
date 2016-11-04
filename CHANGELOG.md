@@ -2,6 +2,8 @@
 
  * Performance improvement for simple transformation ops (breaks binary compatibility)
  * Future timeout decorators
+ * Support for Scala 2.12
+ * Better retry backoff algoritm and correct docs about it
 
 ## 1.1.3
 
