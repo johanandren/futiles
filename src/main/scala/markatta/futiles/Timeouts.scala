@@ -49,7 +49,7 @@ object Timeouts {
     final implicit class FutureTimeoutDecorator[T](future: Future[T]) {
 
       /**
-       * If this future takes more than `atMost` it will instead be failed with a [[java.util.concurrent.TimeoutException]]
+       * If this future takes more than `atMost` it will instead be failed with a `java.util.concurrent.TimeoutException`
        *
        * Note that the original future will always complete at some point,
        * so this does in no way cancel the future if it times out.
