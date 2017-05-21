@@ -5,8 +5,5 @@ scala:
   - 2.12.0
   - 2.11.5
   - 2.10.5
-script: 
-  - sbt coverage
-  - sbt test
-
-after_success: "sbt coveralls"
+script: "sbt clean coverage test"
+after_success: "sbt coverageReport coveralls"
