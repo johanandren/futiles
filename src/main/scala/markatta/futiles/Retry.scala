@@ -69,7 +69,7 @@ object Retry {
     }
 
 
-  private def retryWithBackOffLoop[A](totalTimes: Int, timesTried: Int, backOffUnit: FiniteDuration, shouldRetry: Throwable => Boolean = alwaysRetry)(fBlock: => Future[A])(implicit ec: ExecutionContext): Future[A] =
+  private def retryWithBackOffLoop[A](totalTimes: Int, timesTried: Int, backOffUnit: FiniteDuration, shouldRetry: Throwable => Boolean)(fBlock: => Future[A])(implicit ec: ExecutionContext): Future[A] =
     if (totalTimes <= timesTried) fBlock
     else fBlock.recoverWith {
       case ex: Throwable if shouldRetry(ex) =>

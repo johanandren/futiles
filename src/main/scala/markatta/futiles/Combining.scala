@@ -16,7 +16,7 @@
 
 package markatta.futiles
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 object Combining {
 
