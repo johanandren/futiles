@@ -17,6 +17,7 @@
 package markatta.futiles
 
 import scala.concurrent.Future.{failed, successful}
+import scala.concurrent.Promise
 import scala.util.Failure
 
 class CombiningSpec extends Spec {
@@ -39,6 +40,10 @@ class CombiningSpec extends Spec {
 
       it("combines three successful futures into a tuple3") {
         product(successful(1), successful(2), successful(3)).futureValue should be((1, 2, 3))
+      }
+
+      it("fails fast three on combining futures into a tuple3") {
+        product(Promise().future, Promise().future, failed(new RuntimeException("argh"))).failed.futureValue shouldBe a[RuntimeException]
       }
 
       it("combines two successful and one failed futures into a failure") {

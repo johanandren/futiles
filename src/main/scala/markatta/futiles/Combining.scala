@@ -16,7 +16,10 @@
 
 package markatta.futiles
 
-import scala.concurrent.Future
+import java.util.concurrent.atomic.AtomicReference
+
+import scala.concurrent.{Future, Promise}
+import scala.util.{Failure, Success}
 
 object Combining {
 
@@ -30,14 +33,36 @@ object Combining {
     fa.zip(fb)
 
   /**
-   * Combine three future values into a tuple when they arrive, or fail if either fails
+   * Combine three future values into a tuple when they arrive, or fail as soon as fast as any one of them fails
    */
-  def product[A, B, C](fa: Future[A], fb: Future[B], fc: Future[C]): Future[(A, B, C)] =
-    for {
-      a <- fa
-      b <- fb
-      c <- fc
-    } yield (a, b, c)
+  def product[A, B, C](fa: Future[A], fb: Future[B], fc: Future[C]): Future[(A, B, C)] = {
+    val promise = Promise[(A, B, C)]()
+    val triple = new AtomicReference[(A, B, C)]((null.asInstanceOf[A], null.asInstanceOf[B], null.asInstanceOf[C]))
+    def tryUpdate(mod: (A, B, C) => (A, B, C)): Unit = {
+      val original = triple.get()
+      val updated = mod.tupled(original)
+      if (updated._1 != null && updated._2 != null && updated._3 != null) promise.trySuccess(updated)
+      else if (triple.compareAndSet(original, updated)) ()
+      else tryUpdate(mod)
+    }
+
+    fa.onComplete {
+      case Success(a) => tryUpdate((_, b, c) => (a, b, c))
+      case Failure(ex) => promise.tryFailure(ex)
+    }
+
+    fb.onComplete {
+      case Success(b) => tryUpdate((a, _, c) => (a, b, c))
+      case Failure(ex) => promise.tryFailure(ex)
+    }
+
+    fc.onComplete {
+      case Success(c) => tryUpdate((a, b, _) => (a, b, c))
+      case Failure(ex) => promise.tryFailure(ex)
+    }
+
+    promise.future
+  }
 
 
   /**
