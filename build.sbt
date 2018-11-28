@@ -1,12 +1,24 @@
 name := "futiles"
 organization := "com.markatta"
 
-scalaVersion := "2.12.3"
-crossScalaVersions := Seq(scalaVersion.value, "2.11.11", "2.10.5")
+scalaVersion := "2.13.0-M5"
+crossScalaVersions := Seq(scalaVersion.value, "2.12.7", "2.11.12") // , "2.10.5")
 scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
+// scalafix
+/* had to run this on 2.12 - fails on 2.13.0-M5
+scalafixDependencies in ThisBuild += "org.scala-lang.modules" %% "scala-collection-migrations" % "0.2.1"
+scalacOptions ++= List("-Yrangepos", "-P:semanticdb:synthetics:on")
+addCompilerPlugin(scalafixSemanticdb) // enable SemanticDB
+scalacOptions ++= List(
+  "-Yrangepos",          // required by SemanticDB compiler plugin
+  "-Ywarn-unused-import" // required by `RemoveUnused` rule
+)
+*/
+
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.0" % "test"
+  "org.scala-lang.modules" %% "scala-collection-compat" % "0.2.1",
+  "org.scalatest" %% "scalatest" % "3.0.6-SNAP3" % "test"
 )
 
 // releasing
