@@ -20,6 +20,7 @@ import scala.collection.generic.CanBuildFrom
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.higherKinds
 import scala.util.Try
+import scala.collection.compat._
 
 /**
  * Functions for transforming something with a future inside into a future with something inside
@@ -63,7 +64,7 @@ object Sequencing {
    *         that all of the failures can be handled, reported etc.
    * @see Lifting.liftTry()
    */
-  def sequenceTries[A, M[X] <: TraversableOnce[X]](
+  def sequenceTries[A, M[X] <: IterableOnce[X]](
     fas: M[Future[A]]
   )(
     implicit ec: ExecutionContext, cbf: CanBuildFrom[M[Future[A]], Try[A], M[Try[A]]]
