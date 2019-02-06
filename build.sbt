@@ -2,11 +2,11 @@ name := "futiles"
 organization := "com.markatta"
 
 scalaVersion := "2.12.3"
-crossScalaVersions := Seq(scalaVersion.value, "2.11.11", "2.10.5")
+crossScalaVersions := Seq(scalaVersion.value, "2.11.11", "2.10.5", "2.13.0-M5")
 scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.0" % "test"
+  "org.scalatest" %% "scalatest" % "3.0.6-SNAP6" % "test"
 )
 
 // releasing
