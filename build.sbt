@@ -1,7 +1,7 @@
 name := "futiles"
 organization := "com.markatta"
 
-crossScalaVersions := Seq("2.12.3", "2.11.11", "2.10.5", "2.13.0")
+crossScalaVersions := Seq("2.12.3", "2.11.11", "2.13.0")
 scalaVersion := crossScalaVersions.value.last
 scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 

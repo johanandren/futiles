@@ -1,3 +1,8 @@
+## 2.0.1
+
+ * Support for Scala 2.13
+ * Dropping support for Scala 2.10
+
 ## 2.0.0
 
  * Performance improvement for simple transformation ops (breaks binary compatibility)
