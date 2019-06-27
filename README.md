@@ -25,9 +25,9 @@ libraryDependencies += "com.markatta" %% "futiles" % "2.0.0"
 
 Latest stable version:
 
+* Scala 2.13 - [![Maven Central, Scala 2.13](https://maven-badges.herokuapp.com/maven-central/com.markatta/futiles_2.13/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22futiles_2.13%22)
 * Scala 2.12 - [![Maven Central, Scala 2.12](https://maven-badges.herokuapp.com/maven-central/com.markatta/futiles_2.12/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22futiles_2.12%22) 
 * Scala 2.11 - [![Maven Central, Scala 2.11](https://maven-badges.herokuapp.com/maven-central/com.markatta/futiles_2.11/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22futiles_2.11%22)
-* Scala 2.10 - [![Maven Central, Scala 2.10](https://maven-badges.herokuapp.com/maven-central/com.markatta/futiles_2.10/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22futiles_2.10%22)
 
 
 
