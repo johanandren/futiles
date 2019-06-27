@@ -1,21 +1,25 @@
 name := "futiles"
 organization := "com.markatta"
 
-scalaVersion := "2.12.3"
-crossScalaVersions := Seq(scalaVersion.value, "2.11.11", "2.10.5", "2.13.0-M5")
+crossScalaVersions := Seq("2.12.3", "2.11.11", "2.10.5", "2.13.0")
+scalaVersion := crossScalaVersions.value.last
 scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
-libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.6-SNAP6" % "test"
-)
+libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.8" % "test")
 
 // releasing
 releaseCrossBuild := true
-licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+licenses := Seq(
+  "Apache License, Version 2.0" -> url(
+    "http://www.apache.org/licenses/LICENSE-2.0"
+  )
+)
 homepage := Some(url("https://github.com/johanandren/futiles"))
 publishMavenStyle := true
 publishArtifact in Test := false
-pomIncludeRepository := { _ => false }
+pomIncludeRepository := { _ =>
+  false
+}
 publishTo := Some {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)

@@ -16,12 +16,11 @@ object RetryAnalysis extends App {
   val unit = 1.second
 
   val result = range.flatMap { n =>
-    (0 to 1000).map(_ => p.println(n + "\t" + Retry.nextBackOff(n, unit).toMillis))
+    (0 to 1000).map(
+      _ => p.println(s"$n\t${Retry.nextBackOff(n, unit).toMillis}")
+    )
   }
 
   println(s"Wrote $file")
-
-
-
 
 }
