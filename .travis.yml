@@ -1,8 +1,30 @@
 language: scala
-jdk:
-  - oraclejdk8
+
+sudo: false
+
 scala:
   - 2.13.0
   - 2.12.0
-  - 2.11.5
-script: "sbt clean test"
+
+before_install:
+  # using jabba for custom jdk management
+  - curl -sL https://raw.githubusercontent.com/shyiko/jabba/0.11.2/install.sh | bash && . ~/.jabba/jabba.sh
+  - jabba install $TRAVIS_JDK
+install: jabba use "$TRAVIS_JDK" && java -Xmx32m -version
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -print -delete
+  - find $HOME/.sbt  -name "*.lock"               -print -delete
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot
+    - $HOME/.jabba/jdk
+
+# script for the default 'test' stage:
+script: sbt -no-colors -J-Xss2m ++$TRAVIS_SCALA_VERSION test
+
+env:
+  global:
+    - TRAVIS_JDK=adopt@~1.8.202-08
