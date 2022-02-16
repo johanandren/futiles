@@ -1,7 +1,7 @@
 name := "futiles"
 organization := "com.markatta"
 
-crossScalaVersions := Seq("2.12.3", "2.11.11", "2.13.0")
+crossScalaVersions := Seq("2.12.15", "2.11.12", "2.13.8")
 scalaVersion := crossScalaVersions.value.last
 scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
@@ -16,7 +16,7 @@ licenses := Seq(
 )
 homepage := Some(url("https://github.com/johanandren/futiles"))
 publishMavenStyle := true
-publishArtifact in Test := false
+Test / publishArtifact := false
 pomIncludeRepository := { _ =>
   false
 }
@@ -28,16 +28,10 @@ publishTo := Some {
     "releases" at nexus + "service/local/staging/deploy/maven2"
 }
 
-pomExtra :=
-  <scm>
-    <url>git@github.com:johanandren/futiles.git</url>
-    <connection>scm:git:git@github.com:johanandren/futiles.git</connection>
-  </scm>
-  <developers>
-    <developer>
-      <id>johanandren</id>
-      <name>Johan Andrén</name>
-      <email>johan@markatta.com</email>
-      <url>https://markatta.com/johan/codemonkey</url>
-    </developer>
-  </developers>
+scmInfo := Some(
+  ScmInfo(url("https://github.com/johanandren/futiles"), "git@github.com:johanandren/futiles.git")
+)
+
+developers := List(
+  Developer("johanandren", "Johan Andrén", "johan@markatta.com", url("https://markatta.com/johan/codemonkey"))
+)
