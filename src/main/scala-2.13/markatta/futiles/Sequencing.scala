@@ -18,7 +18,6 @@ package markatta.futiles
 
 import scala.collection.BuildFrom
 import scala.concurrent.{ExecutionContext, Future}
-import scala.language.higherKinds
 import scala.util.Try
 
 /**
