@@ -28,19 +28,19 @@ object Timeouts {
 
   private val timer = new Timer()
 
-  /**
-   * When ```waitFor``` has passed, evaluate ```what``` on the given execution context and complete the future
-   */
+  /** When ```waitFor``` has passed, evaluate ```what``` on the given execution context and complete the future
+    */
   def timeout[A](waitFor: FiniteDuration)(what: => A)(implicit ec: ExecutionContext): Future[A] = {
     val promise = Promise[A]()
     timer.schedule(new TimerTask {
-      override def run(): Unit = {
-        // make sure we do not block the timer thread
-        Future {
-          promise.complete(Try{ what })
-        }
-      }
-    }, waitFor.toMillis)
+                     override def run(): Unit =
+                       // make sure we do not block the timer thread
+                       Future {
+                         promise.complete(Try(what))
+                       }
+                   },
+                   waitFor.toMillis
+    )
 
     promise.future
   }
@@ -48,27 +48,24 @@ object Timeouts {
   object Implicits {
     final implicit class FutureTimeoutDecorator[T](future: Future[T]) {
 
-      /**
-       * If this future takes more than `atMost` it will instead be failed with a `java.util.concurrent.TimeoutException`
-       *
-       * Note that the original future will always complete at some point,
-       * so this does in no way cancel the future if it times out.
-       */
+      /** If this future takes more than `atMost` it will instead be failed with a
+        * `java.util.concurrent.TimeoutException`
+        *
+        * Note that the original future will always complete at some point, so this does in no way cancel the future if
+        * it times out.
+        */
       def withTimeoutError(atMost: FiniteDuration)(implicit ec: ExecutionContext): Future[T] =
-        Future.firstCompletedOf[T](Seq(
-          future,
-          timeout[T](atMost)(throw new TimeoutException(s"Timed out after $atMost"))))
+        Future.firstCompletedOf[T](
+          Seq(future, timeout[T](atMost)(throw new TimeoutException(s"Timed out after $atMost")))
+        )
 
-      /**
-       * If this future takes more than `atMost` it will instead be completed with a the given default
-       *
-       * Note that the original future will always complete at some point,
-       * so this does in no way cancel the future if it times out.
-       */
+      /** If this future takes more than `atMost` it will instead be completed with a the given default
+        *
+        * Note that the original future will always complete at some point, so this does in no way cancel the future if
+        * it times out.
+        */
       def withTimeoutDefault[U >: T](atMost: FiniteDuration, default: => U)(implicit ec: ExecutionContext): Future[U] =
-        Future.firstCompletedOf[U](Seq(
-          future,
-          timeout(atMost)(default)))
+        Future.firstCompletedOf[U](Seq(future, timeout(atMost)(default)))
 
     }
   }

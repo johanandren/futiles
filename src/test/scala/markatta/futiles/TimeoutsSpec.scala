@@ -28,7 +28,7 @@ class TimeoutsSpec extends Spec {
 
     it("runs a future after a given timeout") {
       val result = Timeouts.timeout(2.millis)("success")
-      result.futureValue should be ("success")
+      result.futureValue should be("success")
     }
 
     it("decorates a future with an error timeout") {
@@ -42,7 +42,7 @@ class TimeoutsSpec extends Spec {
     }
 
     it("completes a future rathern than fail it if it does not timeout") {
-      Future.successful("success").withTimeoutError(10.seconds).futureValue should be ("success")
+      Future.successful("success").withTimeoutError(10.seconds).futureValue should be("success")
     }
 
     it("decorates a future with an default timeout") {
@@ -53,7 +53,7 @@ class TimeoutsSpec extends Spec {
     }
 
     it("completes a future rathern than default it if it does not timeout") {
-      Future.successful("success").withTimeoutDefault(10.seconds, "default").futureValue should be ("success")
+      Future.successful("success").withTimeoutDefault(10.seconds, "default").futureValue should be("success")
     }
   }
 }

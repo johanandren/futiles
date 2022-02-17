@@ -70,7 +70,7 @@ class RetrySpec extends Spec {
         whenReady(liftTry(result)) { fail =>
           fail shouldBe a[Failure[_]]
         }
-        invocations.get() shouldBe (1)
+        invocations.get() shouldBe 1
       }
 
     }
@@ -92,7 +92,7 @@ class RetrySpec extends Spec {
       }
 
       it("returns the first success but has backed off") {
-        val count = new AtomicInteger(0)
+        val count  = new AtomicInteger(0)
         val before = System.currentTimeMillis
         val result = retryWithBackOff(5, 5.millisecond) {
           if (count.incrementAndGet() > 2) successful(System.currentTimeMillis)
@@ -114,12 +114,10 @@ class RetrySpec extends Spec {
         whenReady(liftTry(result)) { fail =>
           fail shouldBe a[Failure[_]]
         }
-        invocations.get() shouldBe (1)
+        invocations.get() shouldBe 1
       }
     }
 
   }
-
-
 
 }
