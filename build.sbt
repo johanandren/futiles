@@ -70,3 +70,19 @@ developers := List(
 
 // Disable publish for now
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
+
+ThisBuild / githubWorkflowBuild := Seq(
+  WorkflowStep.Sbt(List("clean", "coverage", "test"), name = Some("Build project"))
+)
+
+ThisBuild / githubWorkflowBuildPostamble ++= Seq(
+  // See https://github.com/scoverage/sbt-coveralls#github-actions-integration
+  WorkflowStep.Sbt(
+    List("coverageReport", "coverageAggregate", "coveralls"),
+    name = Some("Upload coverage data to Coveralls"),
+    env = Map(
+      "COVERALLS_REPO_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}",
+      "COVERALLS_FLAG_NAME"  -> "Scala ${{ matrix.scala }}"
+    )
+  )
+)
