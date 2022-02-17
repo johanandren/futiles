@@ -28,17 +28,17 @@ object Boolean {
     *   A new future that will be true if both futures are true, if this one is false the second one will not be
     *   evaluated (just like with regular booleans).
     */
-  def and(fb: Future[Boolean], other: => Future[Boolean])(implicit ec: ExecutionContext) =
+  def and(fb: Future[Boolean], other: => Future[Boolean])(implicit ec: ExecutionContext): Future[Boolean] =
     fb.flatMap(b => if (!b) Future.successful(false) else other)
 
   /** @return
     *   A new future that will be true if either future is true, if this one is true the second one will not be
     *   evaluated (just like with regular booleans).
     */
-  def or(fb: Future[Boolean], other: => Future[Boolean])(implicit ec: ExecutionContext) =
+  def or(fb: Future[Boolean], other: => Future[Boolean])(implicit ec: ExecutionContext): Future[Boolean] =
     fb.flatMap(b => if (b) Future.successful(true) else other)
 
-  def negate(fb: Future[Boolean])(implicit ec: ExecutionContext) =
+  def negate(fb: Future[Boolean])(implicit ec: ExecutionContext): Future[Boolean] =
     fb.map(!_)
 
   object Implicits {
@@ -49,17 +49,17 @@ object Boolean {
         *   A new future that will be true if both futures are true, if this one is false the second one will not be
         *   evaluated (just like with regular booleans).
         */
-      def &&(other: => Future[Boolean])(implicit ec: ExecutionContext) =
+      def &&(other: => Future[Boolean])(implicit ec: ExecutionContext): Future[Boolean] =
         and(fb, other)(ec)
 
       /** @return
         *   A new future that will be true if either future is true, if this one is true the second one will not be
         *   evaluated (just like with regular booleans).
         */
-      def ||(other: => Future[Boolean])(implicit ec: ExecutionContext) =
+      def ||(other: => Future[Boolean])(implicit ec: ExecutionContext): Future[Boolean] =
         or(fb, other)
 
-      def unary_!(implicit ec: ExecutionContext) = negate(fb)(ec)
+      def unary_!(implicit ec: ExecutionContext): Future[Boolean] = negate(fb)(ec)
 
     }
 
