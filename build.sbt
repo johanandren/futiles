@@ -57,16 +57,8 @@ licenses := Seq(
 homepage               := Some(url("https://github.com/johanandren/futiles"))
 publishMavenStyle      := true
 Test / publishArtifact := false
-pomIncludeRepository := { _ =>
-  false
-}
-publishTo := Some {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    "snapshots" at nexus + "content/repositories/snapshots"
-  else
-    "releases" at nexus + "service/local/staging/deploy/maven2"
-}
+pomIncludeRepository   := { _ => false }
+publishTo              := sonatypePublishTo.value
 
 scmInfo := Some(
   ScmInfo(url("https://github.com/johanandren/futiles"), "git@github.com:johanandren/futiles.git")
