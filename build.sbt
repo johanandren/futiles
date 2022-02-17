@@ -1,8 +1,8 @@
-ThisBuild / name := "futiles"
+ThisBuild / name         := "futiles"
 ThisBuild / organization := "com.markatta"
 
 ThisBuild / crossScalaVersions := Seq("2.12.15", "2.11.12", "2.13.8")
-ThisBuild / scalaVersion := crossScalaVersions.value.last
+ThisBuild / scalaVersion       := crossScalaVersions.value.last
 ThisBuild / scalacOptions ++= Seq("-feature", "-deprecation", "-Xfatal-warnings", "-Xlint")
 
 libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.8" % "test")
@@ -14,8 +14,8 @@ licenses := Seq(
     "http://www.apache.org/licenses/LICENSE-2.0"
   )
 )
-homepage := Some(url("https://github.com/johanandren/futiles"))
-publishMavenStyle := true
+homepage               := Some(url("https://github.com/johanandren/futiles"))
+publishMavenStyle      := true
 Test / publishArtifact := false
 pomIncludeRepository := { _ =>
   false

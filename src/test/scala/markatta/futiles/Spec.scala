@@ -22,6 +22,6 @@ import org.scalatest.{FunSpec, Matchers}
 import scala.concurrent.duration._
 
 abstract class Spec extends FunSpec with Matchers with ScalaFutures {
-  implicit val ec = scala.concurrent.ExecutionContext.Implicits.global
+  implicit val ec                                      = scala.concurrent.ExecutionContext.Implicits.global
   override implicit def patienceConfig: PatienceConfig = PatienceConfig(1.second, 100.millis)
 }

@@ -43,7 +43,9 @@ class CombiningSpec extends Spec {
       }
 
       it("fails fast three on combining futures into a tuple3") {
-        product(Promise().future, Promise().future, failed(new RuntimeException("argh"))).failed.futureValue shouldBe a[RuntimeException]
+        product(Promise().future, Promise().future, failed(new RuntimeException("argh"))).failed.futureValue shouldBe a[
+          RuntimeException
+        ]
       }
 
       it("combines two successful and one failed futures into a failure") {
@@ -61,21 +63,33 @@ class CombiningSpec extends Spec {
       }
 
       it("combines five successful futures into a tuple5") {
-        product(successful(1), successful(2), successful(3), successful(4), successful(5)).futureValue should be((1, 2, 3, 4, 5))
+        product(successful(1), successful(2), successful(3), successful(4), successful(5)).futureValue should be(
+          (1, 2, 3, 4, 5)
+        )
       }
 
       it("combines four successful and one failed futures into a failure") {
         val ex = new RuntimeException("bah")
-        liftTry(product(successful(1), successful(2), successful(3), successful(4), failed(ex))).futureValue should be(Failure(ex))
+        liftTry(product(successful(1), successful(2), successful(3), successful(4), failed(ex))).futureValue should be(
+          Failure(ex)
+        )
       }
 
       it("combines six successful futures into a tuple6") {
-        product(successful(1), successful(2), successful(3), successful(4), successful(5), successful(6)).futureValue should be((1, 2, 3, 4, 5, 6))
+        product(successful(1),
+                successful(2),
+                successful(3),
+                successful(4),
+                successful(5),
+                successful(6)
+        ).futureValue should be((1, 2, 3, 4, 5, 6))
       }
 
       it("combines five successful and one failed futures into a failure") {
         val ex = new RuntimeException("bah")
-        liftTry(product(successful(1), successful(2), successful(3), successful(4), successful(5), failed(ex))).futureValue should be(Failure(ex))
+        liftTry(
+          product(successful(1), successful(2), successful(3), successful(4), successful(5), failed(ex))
+        ).futureValue should be(Failure(ex))
       }
     }
 
@@ -90,15 +104,21 @@ class CombiningSpec extends Spec {
       }
 
       it("maps four successful futures into a result using a function") {
-        map4(successful(1), successful(2), successful(3), successful(4))((a, b, c, d) => a + b + c + d).futureValue should be(10)
+        map4(successful(1), successful(2), successful(3), successful(4))((a, b, c, d) =>
+          a + b + c + d
+        ).futureValue should be(10)
       }
 
       it("maps five successful futures into a result using a function") {
-        map5(successful(1), successful(2), successful(3), successful(4), successful(5))((a, b, c, d, e) => a + b + c + d + e).futureValue should be(15)
+        map5(successful(1), successful(2), successful(3), successful(4), successful(5))((a, b, c, d, e) =>
+          a + b + c + d + e
+        ).futureValue should be(15)
       }
 
       it("maps six successful futures into a result using a function") {
-        map6(successful(1), successful(2), successful(3), successful(4), successful(5), successful(6))((a, b, c, d, e, f) => a + b + c + d + e + f).futureValue should be(21)
+        map6(successful(1), successful(2), successful(3), successful(4), successful(5), successful(6))(
+          (a, b, c, d, e, f) => a + b + c + d + e + f
+        ).futureValue should be(21)
       }
 
     }
@@ -110,19 +130,27 @@ class CombiningSpec extends Spec {
       }
 
       it("flatMaps three successful futures into a result using a function") {
-        flatMap3(successful(1), successful(2), successful(3))((a, b, c) => successful(a + b + c)).futureValue should be(6)
+        flatMap3(successful(1), successful(2), successful(3))((a, b, c) => successful(a + b + c)).futureValue should be(
+          6
+        )
       }
 
       it("flatMaps four successful futures into a result using a function") {
-        flatMap4(successful(1), successful(2), successful(3), successful(4))((a, b, c, d) => successful(a + b + c + d)).futureValue should be(10)
+        flatMap4(successful(1), successful(2), successful(3), successful(4))((a, b, c, d) =>
+          successful(a + b + c + d)
+        ).futureValue should be(10)
       }
 
       it("flatMaps five successful futures into a result using a function") {
-        flatMap5(successful(1), successful(2), successful(3), successful(4), successful(5))((a, b, c, d, e) => successful(a + b + c + d + e)).futureValue should be(15)
+        flatMap5(successful(1), successful(2), successful(3), successful(4), successful(5))((a, b, c, d, e) =>
+          successful(a + b + c + d + e)
+        ).futureValue should be(15)
       }
 
       it("flatMaps six successful futures into a result using a function") {
-        flatMap6(successful(1), successful(2), successful(3), successful(4), successful(5), successful(6))((a, b, c, d, e, f) => successful(a + b + c + d + e + f)).futureValue should be(21)
+        flatMap6(successful(1), successful(2), successful(3), successful(4), successful(5), successful(6))(
+          (a, b, c, d, e, f) => successful(a + b + c + d + e + f)
+        ).futureValue should be(21)
       }
     }
 
