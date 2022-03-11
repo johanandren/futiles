@@ -1,6 +1,5 @@
 # Futiles
 
-[![Join the chat at https://gitter.im/johanandren/futiles](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/johanandren/futiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://github.com/johanandren/futiles/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/johanandren/futiles/actions/workflows/ci.yml?query=branch%3Amain)
 [![Coverage Status](https://coveralls.io/repos/johanandren/futiles/badge.svg?branch=master)](https://coveralls.io/r/johanandren/futiles?branch=master)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
