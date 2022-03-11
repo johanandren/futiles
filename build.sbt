@@ -68,6 +68,11 @@ developers := List(
   Developer("johanandren", "Johan Andrén", "johan@markatta.com", url("https://markatta.com/johan/codemonkey"))
 )
 
+ThisBuild / githubWorkflowJavaVersions := List(
+  JavaSpec.temurin("11"),
+  JavaSpec.temurin("17")
+)
+
 // Disable publish for now
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
 
