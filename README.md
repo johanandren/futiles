@@ -334,4 +334,6 @@ cancellableFuture.cancel()
 
 Note that the `.cancel` method on `CancelableFuture` is a best effort implementation and
 it also does not handle cleaning up of resources (such as file handles) since further
-computations deriving from `.map`/`.flatMap`/`onComplete` may not execute.
+computations deriving from `.map`/`.flatMap`/`onComplete` may not execute. If a 
+`CancelableFuture` was cancelled this way it will fail with a `CancellationException`
+exception.

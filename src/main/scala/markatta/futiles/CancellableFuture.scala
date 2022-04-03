@@ -9,6 +9,7 @@ trait CancellableFuture[T] extends Future[T] {
 
   /** Attempts to cancel the underlying [[scala.concurrent.Future]]. Note that this is a best effort attempt
     */
+  @throws[CancellationException]
   def cancel(): Unit
 }
 
