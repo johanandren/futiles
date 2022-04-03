@@ -16,7 +16,7 @@ object CancellableFuture {
 
   /** Allows you to run a computation inside of a [[scala.concurrent.Future]] which can later be cancelled
     *
-    * @param block
+    * @param body
     *   The computation to run inside of the [[scala.concurrent.Future]]
     * @param executionContext
     *   The [[scala.concurrent.ExecutionContext]] to run the [[scala.concurrent.Future]] on
@@ -26,6 +26,6 @@ object CancellableFuture {
     * @see
     *   Adapted from https://stackoverflow.com/a/39986418/1519631
     */
-  def apply[T](block: => T)(implicit executionContext: ExecutionContext): CancellableFuture[T] =
-    new CancellableFutureImpl[T](executionContext, block)
+  def apply[T](body: => T)(implicit executionContext: ExecutionContext): CancellableFuture[T] =
+    new CancellableFutureImpl[T](executionContext, body)
 }
