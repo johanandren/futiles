@@ -1,7 +1,7 @@
 package markatta.futiles
 
 import java.util.concurrent.atomic.AtomicBoolean
-import scala.concurrent.{CancellationException, ExecutionException}
+import scala.concurrent.CancellationException
 
 class CancellableSpec extends Spec {
   describe("The cancellable utility") {
@@ -22,8 +22,7 @@ class CancellableSpec extends Spec {
         }
 
         val exception = cancellable.future.failed.futureValue
-        exception shouldBe an[ExecutionException]
-        exception.getCause shouldBe an[IllegalArgumentException]
+        exception shouldBe an[IllegalArgumentException]
       }
 
     }

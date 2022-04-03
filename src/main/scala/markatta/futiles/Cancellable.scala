@@ -17,7 +17,19 @@ class Cancellable[T](executionContext: ExecutionContext, block: => T) {
       override def call(): T = block
     }
   ) {
-    override def done(): Unit = promise.complete(Try(get()))
+    override def done(): Unit = promise.complete(
+      Try(
+        try
+          get()
+        catch {
+          case e: ExecutionException if e.getCause != null =>
+            // This is here to mirror the same behaviour that Scala's Future has, i.e. if you throw
+            // an exception in a Scala Future then then Future.failed has that same exception. Java's
+            // FutureTask however wraps this in an ExecutionException.
+            throw e.getCause
+        }
+      )
+    )
   }
 
   /** Attempts to cancel the underlying [[scala.concurrent.Future]]. Note that this is a best effort attempt
