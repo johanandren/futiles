@@ -315,3 +315,25 @@ val result: Future[Int] = retryWithBackOff(5, 5.seconds) {
   callThatService(): Future[Int]
 }
 ```
+
+### CancelableFuture
+
+If you need to create a ```Future``` that you want to cancel at a later point in time then
+you can use a `CancelableFuture`.
+
+```scala
+import markatta.futiles.CancellableFuture
+
+val cancellableFuture = CancellableFuture {
+  someLongOperation()
+}
+
+cancellableFuture.cancel()
+
+```
+
+Note that the `.cancel` method on `CancelableFuture` is a best effort implementation and
+it also does not handle cleaning up of resources (such as file handles) since further
+computations deriving from `.map`/`.flatMap`/`onComplete` may not execute. If a 
+`CancelableFuture` was cancelled this way it will fail with a `CancellationException`
+exception.
