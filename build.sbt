@@ -55,10 +55,8 @@ licenses := Seq(
   )
 )
 homepage               := Some(url("https://github.com/johanandren/futiles"))
-publishMavenStyle      := true
 Test / publishArtifact := false
 pomIncludeRepository   := { _ => false }
-publishTo              := sonatypePublishTo.value
 
 scmInfo := Some(
   ScmInfo(url("https://github.com/johanandren/futiles"), "git@github.com:johanandren/futiles.git")
@@ -73,8 +71,21 @@ ThisBuild / githubWorkflowJavaVersions := List(
   JavaSpec.temurin("17")
 )
 
-// Disable publish for now
-ThisBuild / githubWorkflowPublishTargetBranches := Seq()
+ThisBuild / githubWorkflowTargetBranches := Seq("main")
+ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
+ThisBuild / githubWorkflowPublishTargetBranches :=
+  Seq(RefPredicate.StartsWith(Ref.Tag("v")))
+ThisBuild / githubWorkflowPublish := Seq(
+  WorkflowStep.Sbt(
+    List("ci-release"),
+    env = Map(
+      "PGP_PASSPHRASE"    -> "${{ secrets.PGP_PASSPHRASE }}",
+      "PGP_SECRET"        -> "${{ secrets.PGP_SECRET }}",
+      "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
+      "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
+    )
+  )
+)
 
 ThisBuild / githubWorkflowBuild := Seq(
   WorkflowStep.Sbt(List("clean", "coverage", "test"), name = Some("Build project"))
