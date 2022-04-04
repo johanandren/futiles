@@ -316,7 +316,7 @@ val result: Future[Int] = retryWithBackOff(5, 5.seconds) {
 }
 ```
 
-### CancelableFuture
+### Cancelling Future's - [markatta.futiles.CancellableFuture](src/main/scala/markatta/futiles/CancellableFuture.scala)
 
 If you need to create a ```Future``` that you want to cancel at a later point in time then
 you can use a `CancelableFuture`.
@@ -337,3 +337,6 @@ it also does not handle cleaning up of resources (such as file handles) since fu
 computations deriving from `.map`/`.flatMap`/`onComplete` may not execute. If a 
 `CancelableFuture` was cancelled this way it will fail with a `CancellationException`
 exception.
+
+Note that `CancellableFuture` implements the `scala.concurrent.Future` interface which
+means you can also use it as a standard `Future`.
