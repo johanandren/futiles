@@ -1,7 +1,7 @@
 ThisBuild / name         := "futiles"
 ThisBuild / organization := "com.markatta"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15", "2.11.12", "2.13.8")
+ThisBuild / crossScalaVersions := Seq("2.12.18", "2.13.12")
 ThisBuild / scalaVersion       := crossScalaVersions.value.last
 
 val flagsFor11 = Seq(
