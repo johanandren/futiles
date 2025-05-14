@@ -1,6 +1,6 @@
 addSbtPlugin("de.heikoseeberger" % "sbt-header"         % "5.10.0")
-addSbtPlugin("com.codecommit"    % "sbt-github-actions" % "0.14.2")
+addSbtPlugin("com.github.sbt"    % "sbt-github-actions" % "0.25.0")
 addSbtPlugin("org.scalameta"     % "sbt-scalafmt"       % "2.4.6")
 addSbtPlugin("org.scoverage"     % "sbt-scoverage"      % "2.0.9")
 addSbtPlugin("org.scoverage"     % "sbt-coveralls"      % "1.3.11")
-addSbtPlugin("com.github.sbt"    % "sbt-ci-release"     % "1.5.12")
+addSbtPlugin("com.github.sbt"    % "sbt-ci-release"     % "1.9.3")
