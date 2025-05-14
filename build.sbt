@@ -66,6 +66,8 @@ developers := List(
   Developer("johanandren", "Johan Andrén", "johan@markatta.com", url("https://markatta.com/johan/codemonkey"))
 )
 
+ThisBuild / sonatypeCredentialHost := xerial.sbt.Sonatype.sonatypeCentralHost
+
 ThisBuild / githubWorkflowJavaVersions := List(
   JavaSpec.temurin("11"),
   JavaSpec.temurin("17")
